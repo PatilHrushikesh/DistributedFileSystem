@@ -2,6 +2,7 @@ package p2p
 
 import (
 	"encoding/gob"
+	"fmt"
 	"io"
 )
 
@@ -20,6 +21,7 @@ type DefaultDecoder struct{}
 
 func (dec DefaultDecoder) Decode(r io.Reader, msg *RPC) error {
 	peekBuf := make([]byte, 1)
+	fmt.Printf("waiting to read byte\n")
 	if _, err := r.Read(peekBuf); err != nil {
 		return nil
 	}
@@ -33,6 +35,7 @@ func (dec DefaultDecoder) Decode(r io.Reader, msg *RPC) error {
 	}
 	buf := make([]byte, 1028)
 
+	fmt.Printf("Reading stream data\n")
 	n, err := r.Read(buf)
 	if err != nil {
 		return err

@@ -36,7 +36,7 @@ func TestStoreDeleteKey(t *testing.T) {
 		formattedString := fmt.Sprintf("Some jpg byte %d", i)
 		data := []byte(formattedString)
 
-		if err := s.writeStream(key, bytes.NewReader(data)); err != nil {
+		if _, err := s.writeStream(key, bytes.NewReader(data)); err != nil {
 			t.Error(err)
 		}
 
@@ -44,7 +44,7 @@ func TestStoreDeleteKey(t *testing.T) {
 			t.Errorf("file does not exist %s", key)
 		}
 
-		r, err := s.Read(key)
+		_, r, err := s.Read(key)
 		if err != nil {
 			t.Error(err)
 		}

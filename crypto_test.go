@@ -24,11 +24,15 @@ func TestCopyEncryptDecrypt(t *testing.T) {
 	// fmt.Println("\nEncrypted data:", dst.String())
 
 	out := new(bytes.Buffer)
-	if _, err := copyDecrypt(key, dst, out); err != nil {
+	nw, err := copyDecrypt(key, dst, out)
+	if err != nil {
 		print(err)
 		t.Error(err)
 	}
 
+	if nw != 16+len(payload) {
+		t.Fail()
+	}
 	if out.String() != payload {
 		t.Errorf("decryption failed")
 	}
